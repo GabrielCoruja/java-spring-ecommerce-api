@@ -99,6 +99,14 @@
 			<version>5.4.2</version>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- Others Dependencies -->
+
+		<dependency>
+			<groupId>com.auth0</groupId>
+			<artifactId>java-jwt</artifactId>
+			<version>4.4.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -124,7 +132,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>com.gabriel.ecommerce</mainClass>
+					<mainClass>com.gabriel.ecommerce.EcommerceApplication</mainClass>
 					<layout>JAR</layout>
 				</configuration>
 			</plugin>
