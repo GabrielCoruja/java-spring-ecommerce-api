@@ -5,6 +5,8 @@ import com.gabriel.ecommerce.dto.user.UserDto;
 import com.gabriel.ecommerce.models.entities.User;
 import com.gabriel.ecommerce.models.repositories.UserRepository;
 import com.gabriel.ecommerce.utils.UserDtoConvert;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,6 +21,7 @@ public class UserService implements UserDetailsService {
 
   private final UserRepository userRepository;
 
+  @Autowired
   public UserService(UserRepository userRepository) {
     this.userRepository = userRepository;
   }
@@ -37,5 +40,9 @@ public class UserService implements UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     return userRepository.findByUsername(username);
+  }
+
+  public List<User> getAll() {
+    return userRepository.findAll();
   }
 }

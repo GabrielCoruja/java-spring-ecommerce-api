@@ -6,14 +6,18 @@ import com.gabriel.ecommerce.dto.user.UserDto;
 import com.gabriel.ecommerce.models.entities.User;
 import com.gabriel.ecommerce.services.TokenService;
 import com.gabriel.ecommerce.services.UserService;
+import com.gabriel.ecommerce.utils.UserDtoConvert;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -75,5 +79,18 @@ public class UserController {
     responseMap.put("token", token);
 
     return ResponseEntity.status(HttpStatus.OK).body(responseMap);
+  }
+
+  /**
+   * Return all people.
+   */
+  @GetMapping("/users")
+  @PreAuthorize("hasAuthority('ADMIN')")
+  public ResponseEntity<List<UserDto>> getAll() {
+    List<User> users = userService.getAll();
+
+    List<UserDto> usersDto = users.stream().map(UserDtoConvert::modelToDto).toList();
+
+    return ResponseEntity.status(HttpStatus.OK).body(usersDto);
   }
 }
