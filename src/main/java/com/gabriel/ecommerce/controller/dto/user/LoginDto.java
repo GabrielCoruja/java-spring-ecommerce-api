@@ -1,4 +1,4 @@
-package com.gabriel.ecommerce.dto.user;
+package com.gabriel.ecommerce.controller.dto.user;
 
 /**
  * DTO to receive data login.

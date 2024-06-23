@@ -1,4 +1,4 @@
-package com.gabriel.ecommerce.models.entities;
+package com.gabriel.ecommerce.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
@@ -28,7 +28,8 @@ public class ProductSale {
 
   private int quantity;
 
-  public ProductSale() {}
+  public ProductSale() {
+  }
 
   public ProductSale(Product product, Sale sale, int quantity) {
     this.product = product;

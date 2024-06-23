@@ -1,6 +1,6 @@
-package com.gabriel.ecommerce.models.repositories;
+package com.gabriel.ecommerce.repository;
 
-import com.gabriel.ecommerce.models.entities.ProductSale;
+import com.gabriel.ecommerce.entity.ProductSale;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ProductSaleRepository extends JpaRepository<ProductSale, Long> {
+
 }

@@ -1,4 +1,4 @@
-package com.gabriel.ecommerce.models.entities;
+package com.gabriel.ecommerce.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -25,7 +25,8 @@ public class Product {
   @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
   private List<ProductSale> sales = new ArrayList<>();
 
-  public Product() {}
+  public Product() {
+  }
 
   public Product(String name, Double price) {
     this.name = name;

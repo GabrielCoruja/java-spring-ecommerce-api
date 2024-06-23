@@ -1,6 +1,6 @@
-package com.gabriel.ecommerce.advice;
+package com.gabriel.ecommerce.controller.advice;
 
-import com.gabriel.ecommerce.dto.ErrorMessageDto;
+import com.gabriel.ecommerce.controller.dto.ErrorMessageDto;
 import com.gabriel.ecommerce.exception.NotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;

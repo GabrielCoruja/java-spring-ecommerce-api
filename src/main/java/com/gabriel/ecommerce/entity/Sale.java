@@ -1,4 +1,4 @@
-package com.gabriel.ecommerce.models.entities;
+package com.gabriel.ecommerce.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,7 +20,8 @@ public class Sale {
   @OneToMany(mappedBy = "sale")
   private List<ProductSale> products = new ArrayList<>();
 
-  public Sale() {}
+  public Sale() {
+  }
 
   public Long getId() {
     return id;

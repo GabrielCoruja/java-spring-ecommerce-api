@@ -1,10 +1,7 @@
-package com.gabriel.ecommerce.services;
+package com.gabriel.ecommerce.service;
 
-import com.gabriel.ecommerce.dto.user.UserCreateDto;
-import com.gabriel.ecommerce.dto.user.UserDto;
-import com.gabriel.ecommerce.models.entities.User;
-import com.gabriel.ecommerce.models.repositories.UserRepository;
-import com.gabriel.ecommerce.utils.UserDtoConvert;
+import com.gabriel.ecommerce.entity.User;
+import com.gabriel.ecommerce.repository.UserRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,12 +26,11 @@ public class UserService implements UserDetailsService {
   /**
    * Creates a new user.
    */
-  public UserDto create(UserCreateDto user) {
-    String hashPassword = new BCryptPasswordEncoder().encode(user.password());
+  public User create(User user) {
+    String hashPassword = new BCryptPasswordEncoder().encode(user.getPassword());
+    user.setPassword(hashPassword);
 
-    User userResult = userRepository.save(UserDtoConvert.dtoToModel(user, hashPassword));
-
-    return UserDtoConvert.modelToDto(userResult);
+    return userRepository.save(user);
   }
 
   @Override

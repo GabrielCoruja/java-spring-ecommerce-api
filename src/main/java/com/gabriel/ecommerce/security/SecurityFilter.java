@@ -1,7 +1,7 @@
 package com.gabriel.ecommerce.security;
 
-import com.gabriel.ecommerce.services.TokenService;
-import com.gabriel.ecommerce.services.UserService;
+import com.gabriel.ecommerce.service.TokenService;
+import com.gabriel.ecommerce.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,6 +19,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
  */
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
+
   private final TokenService tokenService;
 
   private final UserService userService;

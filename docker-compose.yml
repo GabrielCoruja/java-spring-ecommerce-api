@@ -1,6 +1,5 @@
 version: '3.9'
 services:
-  # Serviço para executar a aplicação Spring Boot
   app:
     build:
       context: .
@@ -17,7 +16,6 @@ services:
     networks:
       - backend
 
-  # Serviço para executar o Postgres
   db:
     image: postgres:16.1
     ports:

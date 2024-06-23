@@ -1,11 +1,11 @@
 package com.gabriel.ecommerce.seed;
 
-import com.gabriel.ecommerce.models.entities.Product;
-import com.gabriel.ecommerce.models.entities.ProductSale;
-import com.gabriel.ecommerce.models.entities.Sale;
-import com.gabriel.ecommerce.models.repositories.ProductRepository;
-import com.gabriel.ecommerce.models.repositories.ProductSaleRepository;
-import com.gabriel.ecommerce.models.repositories.SaleRepository;
+import com.gabriel.ecommerce.entity.Product;
+import com.gabriel.ecommerce.entity.ProductSale;
+import com.gabriel.ecommerce.entity.Sale;
+import com.gabriel.ecommerce.repository.ProductRepository;
+import com.gabriel.ecommerce.repository.ProductSaleRepository;
+import com.gabriel.ecommerce.repository.SaleRepository;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class DatabaseSeeder implements CommandLineRunner {
   private void seedProducts() {
     List<Product> products = new ArrayList<>();
 
-    products.add(new Product("Arroz",  (double) 10));
+    products.add(new Product("Arroz", (double) 10));
     products.add(new Product("Feijao", (double) 20));
 
     productRepository.saveAll(products);
@@ -63,7 +63,7 @@ public class DatabaseSeeder implements CommandLineRunner {
     List<Sale> sales = saleRepository.findAll();
 
     productSales.add(new ProductSale(products.get(0), sales.get(0), 20));
-    productSales.add(new ProductSale(products.get(1), sales.get(0),  10));
+    productSales.add(new ProductSale(products.get(1), sales.get(0), 10));
 
     productSaleRepository.saveAll(productSales);
   }

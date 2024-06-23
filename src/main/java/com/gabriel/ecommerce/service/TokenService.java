@@ -1,11 +1,9 @@
-package com.gabriel.ecommerce.services;
+package com.gabriel.ecommerce.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.gabriel.ecommerce.models.entities.User;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -15,17 +13,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class TokenService {
 
-  @Value("${api.security.token.secret}")
-  private String secret;
+  private final Algorithm algorithm;
+
+  public TokenService(@Value("${api.security.token.secret}") String secret) {
+    this.algorithm = Algorithm.HMAC256(secret);
+  }
 
   /**
    * Generante new token JWT.
    */
-  public String generateToken(User user) {
-    Algorithm algorithm = Algorithm.HMAC256(secret);
+  public String generateToken(String username) {
     return JWT.create()
         .withIssuer("ecommercedb")
-        .withSubject(user.getUsername())
+        .withSubject(username)
         .withExpiresAt(generateExpirationDate())
         .sign(algorithm);
   }
@@ -34,7 +34,6 @@ public class TokenService {
    * Verify token JWT.
    */
   public String validateToken(String token) {
-    Algorithm algorithm = Algorithm.HMAC256(secret);
     return JWT.require(algorithm)
         .withIssuer("ecommercedb")
         .build()
@@ -46,8 +45,7 @@ public class TokenService {
    * Create time to use to expiration token JWT.
    */
   private Instant generateExpirationDate() {
-    return LocalDateTime.now()
-        .plusHours(2)
-        .toInstant(ZoneOffset.of("-03:00"));
+    return Instant.now()
+        .plus(2, ChronoUnit.HOURS);
   }
 }

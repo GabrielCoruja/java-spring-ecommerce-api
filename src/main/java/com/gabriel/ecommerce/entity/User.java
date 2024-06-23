@@ -1,4 +1,4 @@
-package com.gabriel.ecommerce.models.entities;
+package com.gabriel.ecommerce.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -39,7 +39,8 @@ public class User implements UserDetails, GrantedAuthority {
   @Enumerated(EnumType.STRING)
   private Role role;
 
-  public User() {}
+  public User() {
+  }
 
   public Long getId() {
     return id;

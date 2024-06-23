@@ -33,7 +33,7 @@ public class OpenApiConfig implements OpenApiCustomizer {
             .type(SecurityScheme.Type.HTTP)
             .scheme("bearer")
             .bearerFormat("JWT"));
-    
+
     openApi.addSecurityItem(new SecurityRequirement().addList(SCHEME_NAME));
   }
 }

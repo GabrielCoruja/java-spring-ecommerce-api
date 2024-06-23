@@ -1,9 +1,7 @@
-package com.gabriel.ecommerce.controllers;
+package com.gabriel.ecommerce.controller;
 
-import com.gabriel.ecommerce.models.entities.Product;
-import com.gabriel.ecommerce.models.entities.Sale;
-import com.gabriel.ecommerce.services.ProductService;
-import com.gabriel.ecommerce.services.SaleService;
+import com.gabriel.ecommerce.entity.Sale;
+import com.gabriel.ecommerce.service.SaleService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

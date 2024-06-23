@@ -1,8 +1,7 @@
-package com.gabriel.ecommerce.models.repositories;
+package com.gabriel.ecommerce.repository;
 
-import com.gabriel.ecommerce.models.entities.Product;
+import com.gabriel.ecommerce.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -10,4 +9,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
+
 }

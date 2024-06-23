@@ -1,26 +1,34 @@
-package com.gabriel.ecommerce.services;
+package com.gabriel.ecommerce.service;
 
-import com.gabriel.ecommerce.models.entities.Sale;
-import com.gabriel.ecommerce.models.repositories.SaleRepository;
+import com.gabriel.ecommerce.entity.Sale;
+import com.gabriel.ecommerce.repository.SaleRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 /**
- * Service interactive sale data.
+ * The type Sale service.
  */
 @Service
 public class SaleService {
 
   private final SaleRepository saleRepository;
 
+  /**
+   * Instantiates a new Sale service.
+   *
+   * @param saleRepository the sale repository.
+   */
   @Autowired
   public SaleService(SaleRepository saleRepository) {
     this.saleRepository = saleRepository;
   }
 
   /**
-   * Creates a new user.
+   * Gets all.
+   *
+   * @return the all sales.
    */
   public List<Sale> getAll() {
     return saleRepository.findAll();
