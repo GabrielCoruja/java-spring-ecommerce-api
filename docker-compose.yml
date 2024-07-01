@@ -10,7 +10,7 @@ services:
     depends_on:
       - db
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/ecommerce
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/ecommercedb
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: password
     networks:
@@ -22,7 +22,7 @@ services:
       - "5432:5432"
     environment:
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: ecommerce
+      POSTGRES_DB: ecommercedb
     restart: 'always'
     networks:
       - backend
