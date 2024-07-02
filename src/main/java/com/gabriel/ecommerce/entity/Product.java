@@ -1,7 +1,6 @@
 package com.gabriel.ecommerce.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,7 +21,7 @@ public class Product {
 
   private double price;
 
-  @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "product")
   private List<ProductSale> sales = new ArrayList<>();
 
   public Product() {

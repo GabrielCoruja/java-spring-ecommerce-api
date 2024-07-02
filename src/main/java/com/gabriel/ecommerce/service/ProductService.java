@@ -15,6 +15,11 @@ public class ProductService {
 
   private final ProductRepository productRepository;
 
+  /**
+   * Instantiates a new Product service.
+   *
+   * @param productRepository the product repository
+   */
   @Autowired
   public ProductService(ProductRepository productRepository) {
     this.productRepository = productRepository;
@@ -22,6 +27,8 @@ public class ProductService {
 
   /**
    * Return all products.
+   *
+   * @return the all
    */
   public List<Product> getAll() {
     return productRepository.findAll();
@@ -29,14 +36,20 @@ public class ProductService {
 
   /**
    * Find a product.
+   *
+   * @param productId the product id
+   * @return the product
    */
-  public Product getProduct(Long id) {
+  public Product getProduct(Long productId) {
     return productRepository
-        .findById(id).orElseThrow(() -> new NotFoundException("Product Not Found!"));
+        .findById(productId).orElseThrow(() -> new NotFoundException("Product Not Found!"));
   }
 
   /**
    * Create a new product.
+   *
+   * @param product the product
+   * @return the product
    */
   public Product create(Product product) {
     return productRepository.save(product);
@@ -44,6 +57,10 @@ public class ProductService {
 
   /**
    * Update a product.
+   *
+   * @param product   the product
+   * @param productId the product id
+   * @return the product
    */
   public Product update(Product product, Long productId) {
     Product findProduct = getProduct(productId);
@@ -56,6 +73,8 @@ public class ProductService {
 
   /**
    * Delete a product.
+   *
+   * @param productId the product id
    */
   public void remove(Long productId) {
     Product findProduct = getProduct(productId);

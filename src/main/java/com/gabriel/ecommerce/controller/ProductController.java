@@ -1,6 +1,7 @@
 package com.gabriel.ecommerce.controller;
 
 import com.gabriel.ecommerce.controller.dto.product.ProductCreateDto;
+import com.gabriel.ecommerce.controller.dto.product.ProductDto;
 import com.gabriel.ecommerce.entity.Product;
 import com.gabriel.ecommerce.service.ProductService;
 import java.util.List;
@@ -43,10 +44,26 @@ public class ProductController {
    */
   @GetMapping
   @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('MANAGER')")
-  public ResponseEntity<List<Product>> getAllProducts() {
+  public ResponseEntity<List<ProductDto>> getAllProducts() {
     List<Product> products = productService.getAll();
 
-    return ResponseEntity.status(HttpStatus.OK).body(products);
+    List<ProductDto> productDtos = products.stream().map(ProductDto::fromEntity).toList();
+
+    return ResponseEntity.status(HttpStatus.OK).body(productDtos);
+  }
+
+  /**
+   * Gets product.
+   *
+   * @param productId the product id
+   * @return the product
+   */
+  @GetMapping("/{productId}")
+  @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('MANAGER')")
+  public ResponseEntity<ProductDto> getProduct(@PathVariable Long productId) {
+    Product findProduct = productService.getProduct(productId);
+
+    return ResponseEntity.status(HttpStatus.OK).body(ProductDto.fromEntity(findProduct));
   }
 
   /**
@@ -57,10 +74,10 @@ public class ProductController {
    */
   @PostMapping
   @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('MANAGER')")
-  public ResponseEntity<Product> createProduct(@RequestBody ProductCreateDto productCreateDto) {
+  public ResponseEntity<ProductDto> createProduct(@RequestBody ProductCreateDto productCreateDto) {
     Product newProduct = productService.create(productCreateDto.toEntity());
 
-    return ResponseEntity.status(HttpStatus.CREATED).body(newProduct);
+    return ResponseEntity.status(HttpStatus.CREATED).body(ProductDto.fromEntity(newProduct));
   }
 
   /**
@@ -72,11 +89,13 @@ public class ProductController {
    */
   @PutMapping("/{productId}")
   @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('MANAGER')")
-  public ResponseEntity<Product> updateProduct(@RequestBody ProductCreateDto productCreateDto,
-      @PathVariable Long productId) {
+  public ResponseEntity<ProductDto> updateProduct(
+      @RequestBody ProductCreateDto productCreateDto,
+      @PathVariable Long productId
+  ) {
     Product updateProduct = productService.update(productCreateDto.toEntity(), productId);
 
-    return ResponseEntity.status(HttpStatus.OK).body(updateProduct);
+    return ResponseEntity.status(HttpStatus.OK).body(ProductDto.fromEntity(updateProduct));
   }
 
   /**
@@ -87,7 +106,7 @@ public class ProductController {
    */
   @DeleteMapping("/{productId}")
   @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('MANAGER')")
-  public ResponseEntity<Product> removeProduct(@PathVariable Long productId) {
+  public ResponseEntity<ProductDto> removeProduct(@PathVariable Long productId) {
     productService.remove(productId);
 
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

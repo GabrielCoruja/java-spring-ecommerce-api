@@ -1,6 +1,7 @@
 package com.gabriel.ecommerce.service;
 
 import com.gabriel.ecommerce.entity.User;
+import com.gabriel.ecommerce.exception.NotFoundException;
 import com.gabriel.ecommerce.repository.UserRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,11 @@ public class UserService implements UserDetailsService {
 
   private final UserRepository userRepository;
 
+  /**
+   * Instantiates a new User service.
+   *
+   * @param userRepository the user repository
+   */
   @Autowired
   public UserService(UserRepository userRepository) {
     this.userRepository = userRepository;
@@ -25,6 +31,9 @@ public class UserService implements UserDetailsService {
 
   /**
    * Creates a new user.
+   *
+   * @param user the user
+   * @return the user
    */
   public User create(User user) {
     String hashPassword = new BCryptPasswordEncoder().encode(user.getPassword());
@@ -33,12 +42,22 @@ public class UserService implements UserDetailsService {
     return userRepository.save(user);
   }
 
+  /**
+   * Gets all.
+   *
+   * @return the all
+   */
+  public List<User> getAll() {
+    return userRepository.findAll();
+  }
+
+  public User getUser(Long userId) {
+    return userRepository.findById(userId)
+        .orElseThrow(() -> new NotFoundException("User Not Found!"));
+  }
+
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     return userRepository.findByUsername(username);
-  }
-
-  public List<User> getAll() {
-    return userRepository.findAll();
   }
 }

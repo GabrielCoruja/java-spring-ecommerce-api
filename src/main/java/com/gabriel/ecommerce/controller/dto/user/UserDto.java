@@ -10,6 +10,9 @@ public record UserDto(Long id, String username, Role role) {
 
   /**
    * Convert from UserEnttty to UserDto.
+   *
+   * @param user the user
+   * @return the user dto
    */
   public static UserDto fromEntity(User user) {
     return new UserDto(

@@ -10,6 +10,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.Collection;
 import java.util.List;
@@ -39,7 +40,18 @@ public class User implements UserDetails, GrantedAuthority {
   @Enumerated(EnumType.STRING)
   private Role role;
 
+  @OneToMany
+  private List<Sale> sales;
+
   public User() {
+  }
+
+  public User(String username, String email, String password, Role role, List<Sale> sales) {
+    this.username = username;
+    this.email = email;
+    this.password = password;
+    this.role = role;
+    this.sales = sales;
   }
 
   public Long getId() {
@@ -82,6 +94,14 @@ public class User implements UserDetails, GrantedAuthority {
 
   public void setRole(Role role) {
     this.role = role;
+  }
+
+  public List<Sale> getSales() {
+    return sales;
+  }
+
+  public void setSales(List<Sale> sales) {
+    this.sales = sales;
   }
 
   @Override

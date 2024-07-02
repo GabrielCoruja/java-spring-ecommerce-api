@@ -4,6 +4,7 @@ import com.gabriel.ecommerce.controller.dto.TokenDto;
 import com.gabriel.ecommerce.controller.dto.user.LoginDto;
 import com.gabriel.ecommerce.controller.dto.user.UserCreateDto;
 import com.gabriel.ecommerce.controller.dto.user.UserDto;
+import com.gabriel.ecommerce.controller.dto.user.UserSalesDto;
 import com.gabriel.ecommerce.entity.User;
 import com.gabriel.ecommerce.service.TokenService;
 import com.gabriel.ecommerce.service.UserService;
@@ -16,6 +17,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +36,10 @@ public class UserController {
 
   /**
    * Constructor Person Controller.
+   *
+   * @param userService           the user service
+   * @param authenticationManager the authentication manager
+   * @param tokenService          the token service
    */
   @Autowired
   public UserController(
@@ -48,6 +54,9 @@ public class UserController {
 
   /**
    * Register a person.
+   *
+   * @param userCreateDto the user create dto
+   * @return the response entity
    */
   @PostMapping("/users")
   public ResponseEntity<UserDto> createUser(
@@ -60,6 +69,9 @@ public class UserController {
 
   /**
    * Login.
+   *
+   * @param loginDto the login dto
+   * @return the response entity
    */
   @PostMapping("/auth/login")
   public ResponseEntity<TokenDto> login(
@@ -76,6 +88,8 @@ public class UserController {
 
   /**
    * Return all people.
+   *
+   * @return the all
    */
   @GetMapping("/users")
   @PreAuthorize("hasAuthority('ADMIN')")
@@ -85,5 +99,13 @@ public class UserController {
     List<UserDto> usersDto = users.stream().map(UserDto::fromEntity).toList();
 
     return ResponseEntity.status(HttpStatus.OK).body(usersDto);
+  }
+
+  @GetMapping("/users/{userId}")
+  @PreAuthorize("hasAuthority('ADMIN')")
+  public ResponseEntity<UserSalesDto> getUser(@PathVariable Long userId) {
+    User user = userService.getUser(userId);
+
+    return ResponseEntity.status(HttpStatus.OK).body(UserSalesDto.fromEntity(user));
   }
 }
