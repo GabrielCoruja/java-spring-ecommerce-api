@@ -51,6 +51,12 @@ public class UserService implements UserDetailsService {
     return userRepository.findAll();
   }
 
+  /**
+   * Gets user.
+   *
+   * @param userId the user id
+   * @return the user
+   */
   public User getUser(Long userId) {
     return userRepository.findById(userId)
         .orElseThrow(() -> new NotFoundException("User Not Found!"));

@@ -13,6 +13,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OpenApiConfig implements OpenApiCustomizer {
 
+  /**
+   * The Scheme name.
+   */
   public final String SCHEME_NAME = "Bearer Auth";
 
   @Override

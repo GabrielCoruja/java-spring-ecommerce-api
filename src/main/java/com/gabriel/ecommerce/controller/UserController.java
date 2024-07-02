@@ -101,6 +101,12 @@ public class UserController {
     return ResponseEntity.status(HttpStatus.OK).body(usersDto);
   }
 
+  /**
+   * Gets user.
+   *
+   * @param userId the user id
+   * @return the user
+   */
   @GetMapping("/users/{userId}")
   @PreAuthorize("hasAuthority('ADMIN')")
   public ResponseEntity<UserSalesDto> getUser(@PathVariable Long userId) {

@@ -10,6 +10,8 @@ public record UserCreateDto(String username, String password, String email, Role
 
   /**
    * Convert from creation UserDto to entity User.
+   *
+   * @return the user
    */
   public User toEntity() {
     User user = new User();

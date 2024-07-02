@@ -24,6 +24,12 @@ public class SecurityFilter extends OncePerRequestFilter {
 
   private final UserService userService;
 
+  /**
+   * Instantiates a new Security filter.
+   *
+   * @param tokenService the token service
+   * @param userService  the user service
+   */
   @Autowired
   public SecurityFilter(TokenService tokenService, UserService userService) {
     this.tokenService = tokenService;

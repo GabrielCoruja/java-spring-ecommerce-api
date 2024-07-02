@@ -64,14 +64,20 @@ public class SaleController {
     return ResponseEntity.status(HttpStatus.OK).body(SaleProductsDto.fromEntity(findsale));
   }
 
+  /**
+   * Create sale response entity.
+   *
+   * @param saleCreateDto the sale create dto
+   * @return the response entity
+   */
   @PostMapping
-//  @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('MANAGER')")
-  public ResponseEntity<Sale> createSale(@RequestBody List<SaleCreateDto> saleCreateDto) {
+  @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('MANAGER')")
+  public ResponseEntity<SaleProductsDto> createSale(
+      @RequestBody List<SaleCreateDto> saleCreateDto
+  ) {
     Sale newSale = saleService.create(saleCreateDto);
 
-//    SaleProductsDto sale = new SaleProductsDto(newSale.getId(), newSale.getProducts());
-
-    return ResponseEntity.status(HttpStatus.OK).body(newSale);
+    return ResponseEntity.status(HttpStatus.OK).body(SaleProductsDto.fromEntity(newSale));
   }
 
 }

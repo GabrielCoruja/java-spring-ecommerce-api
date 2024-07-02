@@ -17,6 +17,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ManagerException {
 
+  /**
+   * Not found exception response entity.
+   *
+   * @param exception the exception
+   * @return the response entity
+   */
   @ExceptionHandler({
       NotFoundException.class,
   })
@@ -25,6 +31,12 @@ public class ManagerException {
         .body(new ErrorMessageDto(exception.getMessage()));
   }
 
+  /**
+   * Handle data integrity violation exception response entity.
+   *
+   * @param exception the exception
+   * @return the response entity
+   */
   @ExceptionHandler({
       DataIntegrityViolationException.class
   })
@@ -35,6 +47,12 @@ public class ManagerException {
         .body(new ErrorMessageDto("Nome de usuário ou e-mail já cadastrado!"));
   }
 
+  /**
+   * Internal authentication service exception response entity.
+   *
+   * @param exception the exception
+   * @return the response entity
+   */
   @ExceptionHandler({
       InternalAuthenticationServiceException.class,
       BadCredentialsException.class,
@@ -47,6 +65,12 @@ public class ManagerException {
         .body(new ErrorMessageDto("Credenciais inválidas!"));
   }
 
+  /**
+   * Server error exception response entity.
+   *
+   * @param exception the exception
+   * @return the response entity
+   */
   @ExceptionHandler
   public ResponseEntity<ErrorMessageDto> serverErrorException(RuntimeException exception) {
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

@@ -29,6 +29,11 @@ public class SecurityConfiguration {
 
   private final SecurityFilter securityFilter;
 
+  /**
+   * Instantiates a new Security configuration.
+   *
+   * @param securityFilter the security filter
+   */
   @Autowired
   public SecurityConfiguration(SecurityFilter securityFilter) {
     this.securityFilter = securityFilter;
@@ -36,6 +41,10 @@ public class SecurityConfiguration {
 
   /**
    * Method about configuration filter chain.
+   *
+   * @param httpSecurity the http security
+   * @return the security filter chain
+   * @throws Exception the exception
    */
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -58,6 +67,10 @@ public class SecurityConfiguration {
 
   /**
    * Create instance of AuthenticationManager to Controller.
+   *
+   * @param authenticationConfiguration the authentication configuration
+   * @return the authentication manager
+   * @throws Exception the exception
    */
   @Bean
   public AuthenticationManager authenticationManager(
@@ -67,6 +80,8 @@ public class SecurityConfiguration {
 
   /**
    * Bean to help valid password, generate instace.
+   *
+   * @return the password encoder
    */
   @Bean
   public PasswordEncoder passwordEncoder() {

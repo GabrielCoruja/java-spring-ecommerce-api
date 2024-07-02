@@ -16,6 +16,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+/**
+ * The type Database seeder.
+ */
 @Component
 public class DatabaseSeeder implements CommandLineRunner {
 
@@ -27,6 +30,14 @@ public class DatabaseSeeder implements CommandLineRunner {
   private List<Product> products = new ArrayList<>();
   private List<Sale> sales = new ArrayList<>();
 
+  /**
+   * Instantiates a new Database seeder.
+   *
+   * @param productRepository     the product repository
+   * @param saleRepository        the sale repository
+   * @param productSaleRepository the product sale repository
+   * @param userRepository        the user repository
+   */
   @Autowired
   public DatabaseSeeder(
       ProductRepository productRepository,
@@ -72,9 +83,6 @@ public class DatabaseSeeder implements CommandLineRunner {
 
   private void seedProductsSales() {
     List<ProductSale> productSales = new ArrayList<>();
-
-//    List<Product> products = productRepository.findAll();
-//    List<Sale> sales = saleRepository.findAll();
 
     productSales.add(new ProductSale(products.get(0), sales.get(0), 20));
     productSales.add(new ProductSale(products.get(1), sales.get(0), 10));
