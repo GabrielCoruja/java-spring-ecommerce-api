@@ -8,15 +8,16 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - db
+      - postgresdb
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/ecommercedb
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresdb:5432/ecommercedb
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: password
+      SPRING_PROFILE: prod
     networks:
       - backend
 
-  db:
+  postgresdb:
     image: postgres:16.1
     ports:
       - "5432:5432"

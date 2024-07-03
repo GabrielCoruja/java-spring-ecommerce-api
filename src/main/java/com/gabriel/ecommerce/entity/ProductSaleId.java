@@ -73,8 +73,8 @@ public class ProductSaleId implements Serializable {
       return false;
     }
     ProductSaleId that = (ProductSaleId) o;
-    return Objects.equals(product, that.product) &&
-        Objects.equals(sale, that.sale);
+    return Objects.equals(product, that.product)
+        && Objects.equals(sale, that.sale);
   }
 
   @Override
