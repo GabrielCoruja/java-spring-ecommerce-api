@@ -13,12 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 /**
  * The type Database seeder.
  */
+@Profile("!test")
+
 @Component
 public class DatabaseSeeder implements CommandLineRunner {
 
@@ -76,7 +79,7 @@ public class DatabaseSeeder implements CommandLineRunner {
 
   private void seedUsers() {
     String hashPassword = new BCryptPasswordEncoder().encode("password");
-    User user = new User("coruja", "coruja@email.com", hashPassword, Role.ADMIN, sales);
+    User user = new User(null, "coruja", "coruja@email.com", hashPassword, Role.ADMIN);
 
     userRepository.save(user);
   }

@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
@@ -41,7 +42,7 @@ public class User implements UserDetails, GrantedAuthority {
   private Role role;
 
   @OneToMany
-  private List<Sale> sales;
+  private List<Sale> sales = new ArrayList<>();
 
   /**
    * Instantiates a new User.
@@ -56,14 +57,13 @@ public class User implements UserDetails, GrantedAuthority {
    * @param email    the email
    * @param password the password
    * @param role     the role
-   * @param sales    the sales
    */
-  public User(String username, String email, String password, Role role, List<Sale> sales) {
+  public User(Long id, String username, String email, String password, Role role) {
+    this.id = id;
     this.username = username;
     this.email = email;
     this.password = password;
     this.role = role;
-    this.sales = sales;
   }
 
   /**
