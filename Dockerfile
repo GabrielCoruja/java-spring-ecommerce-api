@@ -1,4 +1,4 @@
-FROM maven:3-openjdk-17 as build-image
+FROM maven:3-eclipse-temurin-21 AS build-image
 WORKDIR /to-build-app
 COPY pom.xml .
 
@@ -8,7 +8,7 @@ COPY . .
 
 RUN mvn clean package -DskipTests
 
-FROM eclipse-temurin:17-jre-jammy
+FROM eclipse-temurin:21-jre
 WORKDIR /app
 COPY --from=build-image /to-build-app/target/*.jar /app/app.jar
 

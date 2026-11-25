@@ -18,7 +18,7 @@ public record SaleProductsDto(Long saleId, List<ProductSaleDto> products) {
     return new SaleProductsDto(
         sale.getId(),
         sale.getProducts().stream()
-            .map((productSale) -> new ProductSaleDto(productSale.getSale().getId(),
+            .map((productSale) -> new ProductSaleDto(productSale.getProduct().getId(),
                 productSale.getQuantity())).toList()
     );
   }

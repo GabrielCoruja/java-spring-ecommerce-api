@@ -1,6 +1,6 @@
 package com.gabriel.ecommerce.security;
 
-import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
+import static org.springframework.boot.security.autoconfigure.web.servlet.PathRequest.toH2Console;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
