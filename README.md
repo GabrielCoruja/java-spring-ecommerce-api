@@ -11,7 +11,7 @@ API REST de e-commerce com cadastro e login de usuários, catálogo de produtos 
 
 ## Funcionalidades
 
-- **Usuários:** cadastro, login com geração de token JWT e consulta (só `ADMIN`)
+- **Usuários:** cadastro (público cria `USER`; `ADMIN` pode criar `MANAGER` ou `ADMIN`), login com token JWT e consulta (só `ADMIN`)
 - **Produtos:** CRUD completo (`ADMIN` e `MANAGER`)
 - **Vendas:** registro de vendas com vários produtos e quantidades (`ADMIN` e `MANAGER`)
 - **Documentação interativa** com Swagger / OpenAPI
@@ -85,7 +85,7 @@ Ao iniciar, a aplicação cria um usuário `ADMIN` para testes:
 
 | Método | Rota | Acesso | Descrição |
 | :-- | :-- | :-- | :-- |
-| `POST` | `/users` | público | Cadastra um usuário |
+| `POST` | `/users` | público | Cadastra um usuário (sempre como `USER`; só um `ADMIN` autenticado escolhe o perfil) |
 | `POST` | `/auth/login` | público | Faz login e retorna o token JWT |
 | `GET` | `/users` | `ADMIN` | Lista os usuários |
 | `GET` | `/users/{userId}` | `ADMIN` | Busca um usuário |

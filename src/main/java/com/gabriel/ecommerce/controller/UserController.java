@@ -6,6 +6,7 @@ import com.gabriel.ecommerce.controller.dto.user.UserCreateDto;
 import com.gabriel.ecommerce.controller.dto.user.UserDto;
 import com.gabriel.ecommerce.controller.dto.user.UserSalesDto;
 import com.gabriel.ecommerce.entity.User;
+import com.gabriel.ecommerce.security.Role;
 import com.gabriel.ecommerce.service.TokenService;
 import com.gabriel.ecommerce.service.UserService;
 import java.util.List;
@@ -53,18 +54,44 @@ public class UserController {
   }
 
   /**
-   * Register a person.
+   * Register a person. Public sign-ups are always created as USER; only an authenticated
+   * ADMIN can choose another role.
    *
-   * @param userCreateDto the user create dto
+   * @param userCreateDto  the user create dto
+   * @param authentication the authenticated user, if any
    * @return the response entity
    */
   @PostMapping("/users")
   public ResponseEntity<UserDto> createUser(
-      @RequestBody UserCreateDto userCreateDto
+      @RequestBody UserCreateDto userCreateDto,
+      Authentication authentication
   ) {
-    User user = userService.create(userCreateDto.toEntity());
+    User newUser = userCreateDto.toEntity();
+    newUser.setRole(resolveRole(userCreateDto.role(), authentication));
+
+    User user = userService.create(newUser);
 
     return ResponseEntity.status(HttpStatus.CREATED).body(UserDto.fromEntity(user));
+  }
+
+  /**
+   * Define o perfil do novo usuário. Só um ADMIN autenticado pode escolher o perfil;
+   * no cadastro público o usuário é sempre criado como USER.
+   *
+   * @param requestedRole  perfil enviado na requisição (pode ser nulo)
+   * @param authentication usuário autenticado na requisição (pode ser nulo ou anônimo)
+   * @return o perfil que será gravado
+   */
+  private Role resolveRole(Role requestedRole, Authentication authentication) {
+    boolean isAdmin = authentication != null
+        && authentication.isAuthenticated()
+        && authentication.getAuthorities().stream()
+            .anyMatch(authority -> Role.ADMIN.toString().equals(authority.getAuthority()));
+
+    if (isAdmin && requestedRole != null) {
+      return requestedRole;
+    }
+    return Role.USER;
   }
 
   /**
