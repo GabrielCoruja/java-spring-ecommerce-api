@@ -1,123 +1,129 @@
-# SpringMarket: API de E-Commerce com Spring Boot
+# 🛒 SpringMarket: API de E-commerce com Spring Boot
 
-## Descrição
+[![CI](https://github.com/GabrielCoruja/java-spring-ecommerce-api/actions/workflows/ci.yml/badge.svg)](https://github.com/GabrielCoruja/java-spring-ecommerce-api/actions/workflows/ci.yml)
+![Java](https://img.shields.io/badge/Java_21-ED8B00?style=flat-square&logo=openjdk&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot_4.2-6DB33F?style=flat-square&logo=springboot&logoColor=white)
+![Spring Security](https://img.shields.io/badge/Spring_Security_+_JWT-6DB33F?style=flat-square&logo=springsecurity&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white)
+![License](https://img.shields.io/badge/licen%C3%A7a-MIT-blue?style=flat-square)
 
-O SpringMarket é uma API de comércio eletrônico construída com Spring Boot Web, Spring JPA para
-persistência de dados e Spring Security com tokens JWT para Autenticação e Autorização.
-Desenvolvido para oferecer funcionalidades básicas de login e compra de produtos.
+API REST de e-commerce com cadastro e login de usuários, catálogo de produtos e registro de vendas. A autenticação usa **Spring Security com tokens JWT**, e o acesso às rotas é controlado por **perfil de usuário** (`ADMIN`, `MANAGER` e `USER`).
 
 ## Funcionalidades
 
-### Usuários
+- **Usuários:** cadastro, login com geração de token JWT e consulta (só `ADMIN`)
+- **Produtos:** CRUD completo (`ADMIN` e `MANAGER`)
+- **Vendas:** registro de vendas com vários produtos e quantidades (`ADMIN` e `MANAGER`)
+- **Documentação interativa** com Swagger / OpenAPI
+- **Dados de exemplo** carregados ao iniciar a aplicação
 
-- Cadastro de novos usuários.
-- Login de usuários.
+## Tecnologias
 
-## Tecnologias e Ferramentas Utilizadas
+| Camada | Tecnologias |
+| :-- | :-- |
+| Linguagem | Java 21 |
+| Framework | Spring Boot 4.2 (Web MVC, Data JPA, Security, Actuator) |
+| Autenticação | Spring Security + JWT ([java-jwt](https://github.com/auth0/java-jwt)) |
+| Banco de dados | PostgreSQL (Docker) e H2 em memória (desenvolvimento e testes) |
+| Documentação | springdoc-openapi (Swagger UI) |
+| Qualidade | Checkstyle (Google Java Style), JUnit, Mockito e MockMvc |
+| Infra | Docker, Docker Compose e GitHub Actions |
 
-### Tecnologias
+## Arquitetura
 
-- [Java Versão 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
-- [Spring Boot](https://spring.io/projects/spring-boot)
-    - [Spring Data JPA](https://spring.io/projects/spring-data-jpa)
-    - [Spring Security](https://spring.io/projects/spring-security) (Utilizado com JWT)
-- [Docker](https://docs.docker.com/engine/install/)
-    - [Docker Compose](https://docs.docker.com/compose/)
-- [PostgresSQL](https://www.postgresql.org/) (Baixado via Docker)
-- [H2 database](https://www.h2database.com/html/main.html)
-
-### Ferramentas
-
-- [IntelliJ IDEA Community Edition](https://www.jetbrains.com/pt-br/idea/)
-- [Insomnia](https://insomnia.rest/)
-
-### Qualidade de código
-
-O [Checkstyle](https://checkstyle.sourceforge.io/) é uma ferramenta de análise estática de código
-que
-ajuda a garantir que o código-fonte Java siga um conjunto predefinido de regras de codificação. No
-projeto, é utilizado o
-arquivo de
-configuração [intellij-java-google-style.xml](https://github.com/google/styleguide/blob/gh-pages/intellij-java-google-style.xml)
-do Google, que define um conjunto de diretrizes de codificação baseadas nas práticas recomendadas do
-Google para Java.
-
-Para executar a análise, utilize o comando:
-
-```sh
-mvn checkstyle:check
+```
+src/main/java/com/gabriel/ecommerce/
+├── controller/   # endpoints REST, DTOs e tratamento de exceções
+├── service/      # regras de negócio e geração/validação de tokens
+├── repository/   # interfaces Spring Data JPA
+├── entity/       # entidades JPA (User, Product, Sale, ProductSale)
+├── security/     # configuração do Spring Security e filtro JWT
+├── docs/         # configuração do OpenAPI
+└── seed/         # carga inicial de dados
 ```
 
-## Como Executar o projeto
+## Como executar
 
-### Pré-requisitos:
+**Pré-requisitos:** Java 21 ou Docker.
 
-- [SDKMAN! (Software Development Kit Manager)](https://sdkman.io/)
-    - Ótima alternativa para baixar o Java e ter o controle de versões.
-    - Versão utilizada foi a 17.x.x Oracle.
-- [Java Versão 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
-- [Docker](https://docs.docker.com/engine/install/)
-
-### Instalação e Execução
-
-1. Clone o repositório
-   ```sh
-   git clone git@github.com:GabrielCoruja/java-spring-ecommerce-api.git
-    ```
+```sh
+git clone https://github.com/GabrielCoruja/java-spring-ecommerce-api.git
+cd java-spring-ecommerce-api
+```
 
 <details>
-  <summary>Start da aplicação com Docker</summary>
+  <summary><b>Com Docker</b> (PostgreSQL)</summary>
 
-2. Para subir a aplicação e o banco de dados, execute o comando:
-
-    ```sh
-    docker-compose up -d --build
-    ```
-
-Obs: Utilizando o docker os dados serão persistidos utilizando o PostgreSQL.
+```sh
+docker compose up -d --build
+```
 
 </details>
 
 <details>
-  <summary>Start da aplicação sem Docker</summary>
+  <summary><b>Sem Docker</b> (H2 em memória)</summary>
 
-2. Instalação e compilação dos recursos necessários
-   ```sh
-   mvn install -DskipTests
-   ```
+```sh
+./mvnw spring-boot:run
+```
 
-3. Iniciar o banco de dados e a aplicação
-   ```sh
-   mvn spring-boot:run
-   ```
-
-Obs: Sem a utilização do docker os dados serão persistidos utilizando o banco em memória H2.
+O Maven Wrapper (`./mvnw`) baixa o Maven automaticamente, então não é preciso instalá-lo.
 
 </details>
 
-**Endpoint:** O projeto terá como base o endpoint http://localhost:8080
+A API sobe em `http://localhost:8080`, e a documentação fica em **http://localhost:8080/swagger-ui/index.html**.
 
-### Testes
+### Usuário de exemplo
 
-- Para executar todos os testes, utilize o comando:
+Ao iniciar, a aplicação cria um usuário `ADMIN` para testes:
 
-    ```sh
-    mvn test
-    ```
+| username | password |
+| :-- | :-- |
+| `coruja` | `password` |
 
-- Para executar um teste específico, utilize o comando:
+## Endpoints
 
-   ```sh
-   mvn -Dtest=classe#nome_do_metodo test
-   ```
+| Método | Rota | Acesso | Descrição |
+| :-- | :-- | :-- | :-- |
+| `POST` | `/users` | público | Cadastra um usuário |
+| `POST` | `/auth/login` | público | Faz login e retorna o token JWT |
+| `GET` | `/users` | `ADMIN` | Lista os usuários |
+| `GET` | `/users/{userId}` | `ADMIN` | Busca um usuário |
+| `GET` | `/products` | `ADMIN`, `MANAGER` | Lista os produtos |
+| `GET` | `/products/{productId}` | `ADMIN`, `MANAGER` | Busca um produto |
+| `POST` | `/products` | `ADMIN`, `MANAGER` | Cria um produto |
+| `PUT` | `/products/{productId}` | `ADMIN`, `MANAGER` | Atualiza um produto |
+| `DELETE` | `/products/{productId}` | `ADMIN`, `MANAGER` | Remove um produto |
+| `GET` | `/sales` | `ADMIN`, `MANAGER` | Lista as vendas |
+| `GET` | `/sales/{saleId}` | `ADMIN`, `MANAGER` | Busca uma venda |
+| `POST` | `/sales` | `ADMIN`, `MANAGER` | Registra uma venda |
 
-  Exemplo:
+Exemplo de fluxo:
 
-   ```sh
-   mvn -Dtest=UserTest#createSuccessTest test
-   ```
+```sh
+# 1. Login
+curl -X POST http://localhost:8080/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"username":"coruja","password":"password"}'
 
-**Dica:** Com a utilização do Intellij IDEA, você pode executar os próprios testes acessando os
-arquivos de testes da aplicação.
+# 2. Use o token retornado nas rotas protegidas
+curl http://localhost:8080/products -H "Authorization: Bearer <token>"
+```
 
-### Documentação (Em construção 🚧)
+## Testes e qualidade
+
+```sh
+./mvnw verify
+```
+
+O comando roda o **Checkstyle** (Google Java Style), compila e executa os testes de integração (MockMvc) e de unidade. O mesmo comando roda no GitHub Actions a cada push e pull request.
+
+Para rodar um teste específico:
+
+```sh
+./mvnw -Dtest=UserTest#createSuccessTest test
+```
+
+## Licença
+
+Distribuído sob a licença MIT. Veja [LICENSE](LICENSE).
